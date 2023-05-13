@@ -115,7 +115,7 @@ const Payments = () => {
           </div> */}
 
           <button
-            className="btn btn-sm btn-secondary col-3"
+            className="btn btn-sm btn-secondary col-3 m-5"
             onClick={handleShow}
           >
             Add Payment

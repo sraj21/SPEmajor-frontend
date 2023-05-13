@@ -92,8 +92,8 @@ const Customers = () => {
         className="container-fluid mt-3"
         style={{ overflow: "auto", height: "80%" }}
       >
-        <div className="row justify-content-center">
-          <div className="col-3">
+        <div className="row justify-content-center ">
+          <div className="col-3 m-5">
             <input
               className="search__input"
               type="text"
@@ -103,7 +103,7 @@ const Customers = () => {
           </div>
 
           <button
-            className="btn btn-sm btn-secondary col-3"
+            className="btn btn-sm btn-secondary col-3 m-5"
             onClick={handleShow}
           >
             Add Customer

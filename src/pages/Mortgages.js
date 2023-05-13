@@ -105,7 +105,7 @@ const Mortgages = () => {
         style={{ overflow: "auto", height: "80%" }}
       >
         <div className="row justify-content-center">
-          <div className="col-3">
+          <div className="col-3 m-5">
             <input
               className="search__input "
               type="text"
@@ -115,7 +115,7 @@ const Mortgages = () => {
           </div>
 
           <button
-            className="btn btn-sm btn-secondary col-3"
+            className="btn btn-sm btn-secondary col-3 m-5"
             onClick={handleShow}
           >
             Add Mortgage
