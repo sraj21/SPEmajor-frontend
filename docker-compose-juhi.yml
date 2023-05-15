@@ -1,0 +1,44 @@
+version: "3"
+services:
+  db:
+    image: mysql:8
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Debtly
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - debtly-network
+
+  backend:
+    image: juhisohane/spe-major-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/Debtly?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "9192:9192"
+    networks:
+          - debtly-network
+    depends_on:
+      - db
+
+  frontend:
+    image: juhisohane/spe-major-frontend
+    stdin_open: true               # To prevent the container from exiting abruptly.
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+    networks:
+      - debtly-network
+
+networks:
+  debtly-network:
+
+volumes:
+    db:
