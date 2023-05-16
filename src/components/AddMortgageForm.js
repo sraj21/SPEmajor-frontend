@@ -14,9 +14,9 @@ function AddContentForm() {
   const [productName, setProductName] = useState("");
   const [marketValue, setMarketValue] = useState("");
   const [givenAmount, setGivenAmount] = useState("");
-  const [leftAmount, setLeftAmount] = useState("");
+  // const [leftAmount, setLeftAmount] = useState("");
   const [issueDate, setIssueDate] = useState("");
-  const [lastPaid, setLastPaid] = useState("");
+  // const [lastPaid, setLastPaid] = useState("");
   const [interestRate, setInterestRate] = useState("");
   const [mortgageadded, setMortgageAdded] = useState(false);
 
@@ -27,9 +27,9 @@ function AddContentForm() {
       productName: productName,
       marketValue: marketValue,
       givenAmount: givenAmount,
-      leftAmount: leftAmount,
+      leftAmount: givenAmount,
       issueDate: issueDate,
-      lastPaid: lastPaid,
+      lastPaid: issueDate,
       interestRate: interestRate,
     };
     dispatch(updateMortgageState(data));
@@ -50,7 +50,7 @@ function AddContentForm() {
         />
       </div>
       <div className="row">
-        <div className="col-4 col-md mb-4">
+        <div className="col-6 col-md mb-4">
           <input
             type="number"
             id="marketValue"
@@ -61,7 +61,7 @@ function AddContentForm() {
             required
           />
         </div>
-        <div className="col-4 col-md mb-4">
+        <div className="col-6 col-md mb-4">
           <input
             type="number"
             id="givenAmount"
@@ -72,7 +72,7 @@ function AddContentForm() {
             required
           />
         </div>
-        <div className="col-4 col-md mb-4">
+        {/* <div className="col-4 col-md mb-4">
           <input
             type="number"
             id="leftAmount"
@@ -82,10 +82,10 @@ function AddContentForm() {
             onChange={(event) => setLeftAmount(event.target.value)}
             required
           />
-        </div>
+        </div> */}
         </div>
         <div className="row">
-        <div className="col-4 col-md mb-4">
+        <div className="col col-md mb-4">
             Date of issue: 
           <input
             type="string"
@@ -97,7 +97,7 @@ function AddContentForm() {
             required
           />
         </div>
-        <div className="col-4 col-md mb-4">
+        {/* <div className="col-4 col-md mb-4">
             Date of last payment:
           <input
             type="string"
@@ -108,7 +108,7 @@ function AddContentForm() {
             onChange={(event) => setLastPaid(event.target.value)}
             required
           />
-        </div>
+        </div> */}
         </div>
     
       <div className="row">
@@ -117,7 +117,7 @@ function AddContentForm() {
             type="number"
             id="interestRate"
             className="form-control"
-            placeholder="Interest Rate in %"
+            placeholder="Daily interest Rate in %"
             value={interestRate}
             onChange={(event) => setInterestRate(event.target.value)}
             required

@@ -7,9 +7,10 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import AddCustomerForm from "../components/AddCustomerForm";
-import { addCustomerURL, fetchCustomersURL } from "../assets/URLs";
+import { addCustomerURL, fetchCustomersURL, deleteCustomerURL } from "../assets/URLs";
 import { updateCustomerState } from "../reducers/customerReducer";
 import { updateCustomerListState } from "../reducers/customerListReducer";
+import swal from "sweetalert";
 
 const Customers = () => {
   const dispatch = useDispatch();
@@ -39,17 +40,14 @@ const Customers = () => {
     await fetch(request)
       .then((res) => {
         console.log(res);
+        swal("Success", "added customer successfully", "success");
+        fetchCustomerList();
       })
       .catch((err) => console.log(err));
 
     handleClose();
     dispatch(updateCustomerState([]));
   };
-
-  useEffect(() => {
-    fetchCustomerList();
-  }, []);
-
   async function fetchCustomerList() {
     await axios
       .get(`${fetchCustomersURL}`)
@@ -60,6 +58,33 @@ const Customers = () => {
       .catch((error) => {
         console.log(error);
       });
+  }
+  useEffect(() => {
+    fetchCustomerList();
+  }, []);
+
+  
+  const deleteCustomer = async (cid) => {
+    console.log("deleting customer", customer);
+    const request = new Request(`${deleteCustomerURL}/${cid}`, {
+      method: "DELETE",
+      body: JSON.stringify(customer),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: token,
+      //     "ngrok-skip-browser-warning": "69420",
+      //   },
+    });
+    await fetch(request)
+      .then((res) => {
+        console.log(res);
+        swal("Deleted", "deleted customer successfully", "success");
+        fetchCustomerList();
+      })
+      .catch((err) => console.log(err));
   }
   return (
     <div>
@@ -145,6 +170,14 @@ const Customers = () => {
                               Customer id: {cust?.id} 
                             </b>
                           </div>
+                          <div className="col-sm-2">
+                          <Button variant="danger" onClick={() => {
+                          deleteCustomer(cust.id);
+                        }}>
+                            
+            Delete Customer
+          </Button>
+          </div>
                         </div>
                       </div>
                     </Accordion.Header>

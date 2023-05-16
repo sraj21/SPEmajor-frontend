@@ -72,20 +72,10 @@ function AddContentForm() {
             <option value="female">Female</option>
           </select>
         </div> */}
-        <div className="col-12 col-md mb-4">
-          <input
-            type="text"
-            id="phone"
-            className="form-control"
-            placeholder="Enter Phone Number"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            required
-          />
-        </div>
+        
       </div>
       <div className="row">
-        <div className="col-12 col-md-4 mb-4">
+        <div className="col-12 mb-4">
           <input
             type="text"
             id="address"
@@ -97,7 +87,7 @@ function AddContentForm() {
           />
         </div>
         <div className="row">
-          <div className="col-12 col-md-4 mb-4">
+          <div className="col-6 mb-4">
             <input
               type="text"
               id="email"
@@ -108,6 +98,17 @@ function AddContentForm() {
               required
             />
           </div>
+          <div className="col-6 mb-4">
+          <input
+            type="text"
+            id="phone"
+            className="form-control"
+            placeholder="Enter Phone Number"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            required
+          />
+        </div>
         </div>
         <div className="text-end pt-1">
           {customeradded ? (

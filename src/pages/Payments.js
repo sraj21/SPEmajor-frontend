@@ -10,6 +10,9 @@ import AddPaymentForm from "../components/AddPaymentForm";
 import { addPaymentURL, fetchPaymentURL } from "../assets/URLs";
 import { updatePaymentState } from "../reducers/paymentReducer";
 import { updatePaymentListState } from "../reducers/paymentListReducer";
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import PdfDocument from '../components/PaymentInvoice';
+import swal from "sweetalert";
 
 const Payments = () => {
   const dispatch = useDispatch();
@@ -19,6 +22,8 @@ const Payments = () => {
     const paymentList = useSelector((state) => state.paymentList.value);
   const [query, setQuery] = useState("");
 
+
+  const fileName = "Invoice.pdf";
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -40,6 +45,8 @@ const Payments = () => {
     await fetch(request)
       .then((res) => {
         console.log(res);
+        swal("Success", "added payment successfully", "success");
+        fetchPaymentList();
       })
       .catch((err) => console.log(err));
 
@@ -143,9 +150,9 @@ const Payments = () => {
                         className="col-12 row align-items-center justify-content-between p-2 my-2"
                       >
                         <div className="col-12 row align-items-center justify-content-between p-2 my-2">
-                        <div className="col-3">
+                        <div className="col-2">
                           Payment id: {" "}
-                            <b>{paym?.id}</b>
+                            <b>{paym?.pid}</b>
                           </div>
                           <div className="col-3">
                             Amount:
@@ -155,20 +162,43 @@ const Payments = () => {
                           Date of payment: {" "}
                             <b>{paym?.date}</b>
                           </div>
+                          <div className="col-2"><div className='download-link'>
+        <PDFDownloadLink
+          document={<PdfDocument mort={paym} />}
+          fileName={fileName}
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? "Loading..." : "Download Invoice"
+          }
+        </PDFDownloadLink>
+      </div></div>
                         
                         </div>
+                        
                       </div>
                     </Accordion.Header>
-                    {/* <Accordion.Body>
+                    <Accordion.Body>
                       <div className="row justify-content-center">
-                        <div className="col-md-3 col-sm-6 col-12 mt-2 justify-content-center">
-                          Market Value:{" "}
+                      <div className="col mt-2 justify-content-around">
+                          <div>Customer Name:{" "}</div>
                           <b>
-                            Rs.
-                            {paym?.marketValue}{" "}
+                            {paym?.customerFirstName}{" "}{paym?.customerLastName}
                           </b>
                         </div>
-                        <div className="col-md-3 col-sm-6 col-12 mt-2 justify-content-center">
+                        
+                        <div className="col mt-2 justify-content-center">
+                          <div>Product Name:{" "}</div>
+                          <b>
+                            {paym?.productName}{" "}
+                          </b>
+                        </div>
+                        <div className="col mt-2 justify-content-center">
+                          <div>Mortgage ID:{" "}</div>
+                          <b>
+                            {paym?.mid}{" "}
+                          </b>
+                        </div>
+                        <div className="col-md-2 col-sm-6 col-12 mt-2 justify-content-center">
                           Amount Lent:{" "}
                           <b>
                             Rs.
@@ -176,38 +206,24 @@ const Payments = () => {
                           </b>
                         </div>
 
-                        <div className="col-md-3 col-sm-6 col-12 mt-2 justify-content-center">
+                        <div className="col-md-2 col-sm-6 col-12 mt-2 justify-content-center">
                           Amount Left:{" "}
                           <b>
                             Rs.
                             {paym?.leftAmount}{" "}
                           </b>
                         </div>
-                      </div>
-                      <div className="row justify-content-center">
-                        <div className="col-md-3 col-sm-6 col-12 mt-2 justify-content-center">
-                        <div>Date of issue:{" "}</div>
-                          <b>
-                      
-                            {paym?.issueDate}{" "}
-                          </b>
-                        </div>
-                        <div className="col-md-3 col-sm-6 col-12 mt-2 justify-content-center">
-                          <div>Date of last payment:{" "}</div>
-                          <b>
-                      
-                            {paym?.lastPaid}{" "}
-                          </b>
-                        </div>
-                        <div className="col-md-3 col-sm-6 col-12 mt-2 justify-content-center">
-                          <div>Rate of Interest:{" "}</div>
+                        <div className="col-md-2 col-sm-6 col-12 mt-2 justify-content-center">
+                          Rate of Interest:{" "}
                           <b>
                       
                             {paym?.interestRate}{"%"}
                           </b>
                         </div>
                       </div>
-                    </Accordion.Body> */}
+                      
+                        
+                    </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
               </div>
